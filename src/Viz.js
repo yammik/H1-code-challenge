@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import StatesMap from './components/StatesMap';
+import { ProgressBar } from 'react-bootstrap';
 const Api = require('./lib/Api.js')
 
 export default class Viz extends Component {
@@ -9,6 +10,8 @@ export default class Viz extends Component {
     this.state = {
       stateData: [],
       maxLoan: 0,
+      fullyLoaded: true, // set to false as soon as API call starts
+      progress: 100, //
     }
 
     this.getStateLoans = this.getStateLoans.bind(this);
@@ -20,13 +23,40 @@ export default class Viz extends Component {
     }
   }
 
+  loadingStarted = () => {
+    this.setState({
+      fullyLoaded: false,
+      progress: 0,
+      stateData: [],
+    })
+  }
+
+  updateProgress = () => {
+    // based on the number of 51 states
+    // when all information about all states are updated, progress bar disappears
+    const perc = this.state.stateData.length / 51 * 100;
+    if (perc < 100) {
+      this.setState({
+        progress: perc,
+      })
+    } else {
+      this.loadingCompleted();
+    }
+  }
+
+  loadingCompleted = () => {
+    this.setState({
+      fullyLoaded: true,
+    })
+  }
+
   // when a loan purpose is set, look up each state's loans and filter those matching that category
   getStateLoans = () => {
+    this.loadingStarted();
     this.props.appState.allStates.forEach(state => {
-      return Api.getUSState(state.id)
+      return Api.getUSState(state.id, this.props.appState.purposeId)
         .then(resp => {
-          // only sum up loans matching the selected category
-          const loans = this.filterLoans(resp.loans, this.props.appState.purposeId);
+          const loans = resp.loans;
           const loanSum = this.getLoanSum(loans);
           const result = {
             abbr: resp.state.abbr,
@@ -38,6 +68,8 @@ export default class Viz extends Component {
             return {
               stateData: [...prevState.stateData, result],
             }
+          }, () => {
+            this.updateProgress();
           })
         })
     })
@@ -106,13 +138,14 @@ export default class Viz extends Component {
         return legendData[i].color;
       }
     };
-    return 'darkred';
+    return '#0B5345';
   }
 
 
   render() {
     return (
       <div className="viz">
+        {!this.state.fullyLoaded && <ProgressBar active now={this.state.progress} />}
         <StatesMap calculatedData={this.state.stateData} />
       </div>
     )
