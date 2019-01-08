@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import Viz from './Viz';
-import StatesMap from './components/StatesMap';
 
 export default class Controller extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   handleSelect = (e) => {
     this.props.setPurpose(e.target.value);

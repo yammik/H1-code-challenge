@@ -10,9 +10,11 @@ export default class Viz extends Component {
       stateData: [],
       maxLoan: 0,
     }
+
+    this.getStateLoans = this.getStateLoans.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.appState.purposeId !== this.props.appState.purposeId) {
       this.getStateLoans();
     }
@@ -20,32 +22,37 @@ export default class Viz extends Component {
 
   // when a loan purpose is set, look up each state's loans and filter those matching that category
   getStateLoans = () => {
-    const x = this.props.appState.allStates.map(state => {
+    this.props.appState.allStates.forEach(state => {
       return Api.getUSState(state.id)
         .then(resp => {
-          // filter loans matching that category
+          // only sum up loans matching the selected category
           const loans = this.filterLoans(resp.loans, this.props.appState.purposeId);
-
+          const loanSum = this.getLoanSum(loans);
           const result = {
             abbr: resp.state.abbr,
-            loanSum: this.getLoanSum(loans),
+            loanSum: loanSum,
+            color: this.formatStateColor(loanSum),
           }
+          // because API for each state is being called like this, there's a lot of async stuff happening simultaneously
           this.setState(prevState => {
             return {
               stateData: [...prevState.stateData, result],
             }
           })
         })
-        .then(() => {
-          const stateDataWithColor = this.state.stateData.map(state => {
-            return {...state, color: this.percentToColor(state.loanSum / this.state.maxLoan * 100)}
-          })
-          this.setState({
-            stateData: stateDataWithColor,
-          })
-        })
     })
 
+  }
+
+
+  // would be nice to run this once after all states are updated
+  addColor = () => {
+    const stateDataWithColor = this.state.stateData.map(state => {
+      return {...state, color: this.percentToColor(state.loanSum / this.state.maxLoan * 100)}
+    })
+    this.setState({
+      stateData: stateDataWithColor,
+    });
   }
 
   filterLoans = (loans, purposeId) => {
@@ -63,7 +70,7 @@ export default class Viz extends Component {
   }
 
 
-
+  // dynamic coloring
   percentToColor = (percent) => {
     let r, g, b = 0;
     if (percent < 50) {
@@ -77,17 +84,19 @@ export default class Viz extends Component {
     return '#' + ('000000' + h.toString(16)).slice(-6);
   }
 
+
+  // non-dynamic coloring
   formatStateColor = (loanSum) => {
     const legendData = [
-      {'interval': 1000, 'color': 'purple'},
-      {'interval': 5000, 'color': 'darkorchid'},
-      {'interval': 10000, 'color': 'mediumpurple'},
-      {'interval': 50000, 'color': 'lightskyblue'},
-      {'interval': 100000, 'color': 'khaki'},
-      {'interval': 500000, 'color': 'orange'},
-      {'interval': 1000000, 'color': 'salmon'},
-      {'interval': 5000000, 'color': 'indianred'},
-      {'interval': 10000000,'color': 'darkred'}
+      {'interval': 1000, 'color': '#E8F6F3'},
+      {'interval': 5000, 'color': '#D0ECE7'},
+      {'interval': 10000, 'color': '#A2D9CE'},
+      {'interval': 50000, 'color': '#73C6B6'},
+      {'interval': 100000, 'color': '#45B39D'},
+      {'interval': 500000, 'color': '#16A085'},
+      {'interval': 1000000, 'color': '#117A65'},
+      {'interval': 5000000, 'color': '#117A65'},
+      {'interval': 10000000,'color': '#0E6655'}
     ];
 
     // ideally, the data should be normalized to the respective state's population
@@ -104,7 +113,7 @@ export default class Viz extends Component {
   render() {
     return (
       <div className="viz">
-        <StatesMap appState={this.props.appState} calculatedData={this.state.stateData} />
+        <StatesMap calculatedData={this.state.stateData} />
       </div>
     )
   }

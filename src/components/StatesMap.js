@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import USAMap from "react-usa-map";
+import ReactTooltip from 'react-tooltip'
+
 
 // tried using d3, but wasn't comfortable with its clash with React over DOM control
 // seems cool and useful but would only learn it for a longer term project. It's a bit of an overkill for this since the map isn't really interactive
@@ -9,8 +11,14 @@ import USAMap from "react-usa-map";
 export default class StatesMap extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isHovering: false,
+      hoveringOver: '',
+      hoverLoan: 0,
+      dataTip: '',
+    }
   }
-
+  // this function is responsible for the color displaying on each state
   statesCustomConfig = (statesData) => {
     return statesData.reduce((accumulator, state) => {
       return {...accumulator,
@@ -21,14 +29,63 @@ export default class StatesMap extends Component {
     }, {})
   }
 
+  handleMouseOver = (e) => {
+    // only fire when hovering over a state path
+    if (e.target.tagName === 'path' && e.target.classList.value.includes("state")) {
+      const state = this.props.calculatedData.find(st => st.abbr === e.target.classList[0]);
+      this.toggleHoverState();
+      this.setHoveringState(state);
+    } else {
+      this.setState({
+        isHovering: false,
+      })
+    }
+  }
+
+  setHoveringState = (state) => {
+    if (state) {
+      this.setState({
+        hoveringOver: state.abbr,
+        hoverLoan: state.loanSum,
+        dataTip: this.toolTipContent(state.abbr, state.loanSum),
+      })
+    } else {
+      this.setState({
+        dataTip: "no data here (yet)",
+      })
+    }
+  }
+
+  toggleHoverState = () => {
+    this.setState(prevState => {
+      return {
+        isHovering: true,
+      }
+    })
+  }
+
+  toolTipContent = (stateName, stateLoan) => {
+    return `${stateName} took out $${stateLoan ? this.formatDollars(stateLoan) : 0.00}`;
+  }
+
+  formatDollars = (num) => {
+    return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  }
+
   render() {
     const config = this.statesCustomConfig(this.props.calculatedData);
     return (
       <div className="container">
-        <div className="anchor">
+        <div className="anchor" onMouseOver={this.handleMouseOver} data-tip data-for='toolTip'>
           <USAMap customize={config} />
         </div>
+        <ReactTooltip id="toolTip" place="bottom" type="dark" effect="float">
+          <span>{this.state.dataTip}</span>
+        </ReactTooltip>
+
       </div>
     );
   }
 }
+
+// TODO: add a ToolTip component that is shown when (!!this.state.isHovering)
