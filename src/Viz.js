@@ -50,7 +50,6 @@ export default class Viz extends Component {
     })
   }
 
-  // when a loan purpose is set, look up each state's loans and filter those matching that category
   getStateLoans = () => {
     this.loadingStarted();
     this.props.appState.allStates.forEach(state => {
@@ -63,7 +62,6 @@ export default class Viz extends Component {
             loanSum: loanSum,
             color: this.formatStateColor(loanSum),
           }
-          // because API for each state is being called like this, there's a lot of async stuff happening simultaneously
           this.setState(prevState => {
             return {
               stateData: [...prevState.stateData, result],
@@ -73,12 +71,15 @@ export default class Viz extends Component {
           })
         })
     })
-
   }
 
 
-  // would be nice to run this once after all states are updated
-  addColor = () => {
+  percentageBasedColor = () => {
+    // percentage-based coloring; is dynamic
+    // Limitations: don't quite know the min-max range until information about all 51 states is obtained
+    // would be bad UX to make user wait 15s until they see colors appear on the screen
+    // maybe use when loading takes less than 3s
+    // also probably not good for exponential scales
     const stateDataWithColor = this.state.stateData.map(state => {
       return {...state, color: this.percentToColor(state.loanSum / this.state.maxLoan * 100)}
     })
@@ -86,24 +87,16 @@ export default class Viz extends Component {
       stateData: stateDataWithColor,
     });
   }
-
-  filterLoans = (loans, purposeId) => {
-    return loans.filter(loan => loan.purpose_id === parseInt(purposeId))
-  }
-
-  getLoanSum = (loans) => {
-    const sum = loans.reduce((accumulator, loan) => accumulator + loan.loan_amnt, 0);
+  setMaxSum = (sum) => {
+    // goes with percentageBasedColor
     if (this.state.maxLoan < sum) {
       this.setState({
         maxLoan: sum,
       })
     }
-    return sum;
   }
-
-
-  // dynamic coloring
   percentToColor = (percent) => {
+    // red-yellow-green gradient
     let r, g, b = 0;
     if (percent < 50) {
       r = 255;
@@ -117,7 +110,12 @@ export default class Viz extends Component {
   }
 
 
-  // non-dynamic coloring
+  getLoanSum = (loans) => {
+    return loans.reduce((accumulator, loan) => accumulator + loan.loan_amnt, 0);
+  }
+
+
+  // non-dynamic coloring but pretty green gradient; easy on the eyes
   formatStateColor = (loanSum) => {
     const legendData = [
       {'interval': 1000, 'color': '#E8F6F3'},
@@ -130,7 +128,6 @@ export default class Viz extends Component {
       {'interval': 5000000, 'color': '#117A65'},
       {'interval': 10000000,'color': '#0E6655'}
     ];
-
     // ideally, the data should be normalized to the respective state's population
 
     for (let i = 0; i < legendData.length; i++) {
@@ -139,13 +136,14 @@ export default class Viz extends Component {
       }
     };
     return '#0B5345';
+    // should add a legend denoting what the colors represent
   }
 
 
   render() {
     return (
       <div className="viz">
-        {!this.state.fullyLoaded && <ProgressBar active now={this.state.progress} />}
+        {!this.state.fullyLoaded && <ProgressBar id="progress-bar" active now={this.state.progress} />}
         <StatesMap calculatedData={this.state.stateData} />
       </div>
     )

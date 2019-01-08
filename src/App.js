@@ -17,6 +17,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    // load the lighter part of the data
     Api.getUSStates()
       .then(resp => {
         this.setState({
@@ -31,8 +32,6 @@ class App extends Component {
         })
       })
   }
-
-
 
   setPurpose = (value) => {
     this.setState({

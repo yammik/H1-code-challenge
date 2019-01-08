@@ -38,3 +38,15 @@ path:hover {
   opacity: 0.50;
   cursor: pointer;
 }
+
+.controller {
+  width: 500px;
+  margin: auto;
+  padding-top: 30px;
+}
+
+.progress {
+  position: absolute;
+  width: 100%;
+  top: 0;
+}

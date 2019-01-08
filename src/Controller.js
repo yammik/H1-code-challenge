@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
+import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+
 
 export default class Controller extends Component {
 
   handleSelect = (e) => {
     this.props.setPurpose(e.target.value);
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-
   }
 
   makeCategoryOptions = (purpose) => {
@@ -22,12 +19,12 @@ export default class Controller extends Component {
   render() {
     return (
       <div className="controller">
-        <form onSubmit={this.handleSubmit}>
-          <label>pick a category:</label>
-          <select name="categories" onChange={this.handleSelect} >
+        <FormGroup controlId="formControlsSelect" onChange={this.handleSelect}>
+          <ControlLabel>Select a loan category</ControlLabel>
+          <FormControl componentClass="select" placeholder="select">
             {this.props.appState.allPurposes.map(this.makeCategoryOptions)}
-          </select>
-        </form>
+          </FormControl>
+        </FormGroup>
       </div>
     )
   }

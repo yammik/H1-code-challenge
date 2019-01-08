@@ -65,7 +65,7 @@ export default class StatesMap extends Component {
   }
 
   toolTipContent = (stateName, stateLoan) => {
-    return `${stateName} took out $${stateLoan ? this.formatDollars(stateLoan) : 0.00}`;
+    return `People in ${stateName} took out $${stateLoan ? this.formatDollars(stateLoan) : 0.00}`;
   }
 
   formatDollars = (num) => {
@@ -82,10 +82,7 @@ export default class StatesMap extends Component {
         <ReactTooltip id="toolTip" place="bottom" type="dark" effect="float">
           <span>{this.state.dataTip}</span>
         </ReactTooltip>
-
       </div>
     );
   }
 }
-
-// TODO: add a ToolTip component that is shown when (!!this.state.isHovering)
