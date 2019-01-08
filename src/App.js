@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Controller from './Controller';
-import Viz from './Viz';
+import Controller from './components/Controller';
+import Viz from './components/Viz';
 const Api = require('./lib/Api.js')
 
 

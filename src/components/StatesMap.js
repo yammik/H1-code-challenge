@@ -43,6 +43,8 @@ export default class StatesMap extends Component {
   }
 
   setHoveringState = (state) => {
+    // grabs name and total loan of the state being hovered over
+    // makes the text content of tooltip
     if (state) {
       this.setState({
         hoveringOver: state.abbr,

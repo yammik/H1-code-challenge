@@ -21,7 +21,7 @@ export default class Controller extends Component {
       <div className="controller">
         <FormGroup controlId="formControlsSelect" onChange={this.handleSelect}>
           <ControlLabel>Select a loan category</ControlLabel>
-          <FormControl componentClass="select" placeholder="select">
+          <FormControl componentClass="select">
             {this.props.appState.allPurposes.map(this.makeCategoryOptions)}
           </FormControl>
         </FormGroup>
