@@ -1,25 +1,51 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Controller from './Controller';
+import Viz from './Viz';
+const Api = require('./lib/Api.js')
+
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      allStates: [],
+      usState: '',
+      allPurposes: [],
+      purposeId: '',
+    }
+  }
+
+  componentDidMount() {
+    Api.getUSStates()
+      .then(resp => {
+        this.setState({
+          allStates: resp.states,
+        })
+      })
+
+    Api.getPurposes()
+      .then(resp => {
+        this.setState({
+          allPurposes: resp.purposes,
+        })
+      })
+  }
+
+
+
+  setPurpose = (value) => {
+    this.setState({
+      purposeId: value,
+    })
+  }
+
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <Controller appState={this.state} setPurpose={this.setPurpose} />
+        <Viz appState={this.state} />
       </div>
     );
   }
