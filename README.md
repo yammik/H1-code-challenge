@@ -32,7 +32,7 @@ It takes care of a lot of rendering on its own--no need to map a path to the sta
 It is as minimal as its Readme, and very simple to use.
 
 #### react-bootstrap
-[react-bootstrap](https://react-bootstrap.github.io) just makes life easy. I prefer custom CSS when I have the leisure, but bootstrap just makes the layout so much easier.
+[react-bootstrap](https://react-bootstrap.github.io) just makes life easy. I prefer custom CSS when I have the leisure, but bootstrap just makes the layout so much easier. Loading bar is clutch.
 
 #### react-tooltip
 When I realized that d3 would have made it easier to implement Tooltip on hovering over paths, I almost decided to go back to the d3 route, but after 2 seconds of Googling, I found that there was a package for it already: [react-tooltip](https://github.com/wwayne/react-tooltip).
