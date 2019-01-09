@@ -28,9 +28,8 @@ It is as minimal as its Readme, and very simple to use.
 <br />
 
 ## Future features
-####
 - Definitely can use Redux for this.
 - Currently, Word Cloud can be shown only for one state at a time. Because I almost died from trying to load all 51 and parsing 5000+ words for each one. So you have to use the drop menu to select other states to see them (yuck bad UX). Would be cool to have infinite scrolling and load other states' data as a response to a scroll event.
 - The total loan sum per state is currently not normalized. Should use each state's population to do that in the future.
 - The loading bar for the word cloud menu is weak--it doesn't actually show the state of the progress. Should count the number of words to parse through. Since it is only loading one state at a time, it's relatively fast enough, but still would be nice to have a progress bar anyways.
-- The features only show graphical overview of the subset of data, but doesn't offer any real statistics. Should do that.
+- The features only show graphical overview of the subset of data, but doesn't offer any real statistics or solid nuggets of insight. Should do that.
