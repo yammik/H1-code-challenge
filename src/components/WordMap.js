@@ -15,7 +15,6 @@ export default class WordMap extends Component {
     const data = this.props.calculatedData.length > 0 ? Object.values(this.props.calculatedData) : [];
     // only show the top 800 words because each word becomes a DOM node; gets heavy
     const shorterData = data.sort((x, y) => y.value - x.value).slice(0, 800);
-    console.log(shorterData);
     return (
       <WordCloud
         data={shorterData}
