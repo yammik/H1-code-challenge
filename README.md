@@ -67,7 +67,8 @@ App
 
 ## Future features
 - Definitely can use Redux for this.
-- Currently, Word Cloud can be shown only for one state at a time. Because I almost died from trying to load all 51 and parsing 5000+ words for each one. So you have to use the drop menu to select other states to see them (yuck bad UX). Would be cool to have infinite scrolling and load other states' data as a response to a scroll event.
+- Currently, Word Cloud can be shown only for one state at a time. I almost died from trying to load all 51 at once. So you have to use the drop menu to select other states to see them for now. Would be cool to have infinite scrolling and load more data as a response to a scroll event.
 - The total loan sum per state is currently not normalized. Should use each state's population to do that in the future.
 - The loading bar for the word cloud menu is weak--it doesn't actually show the state of the progress. Should count the number of words to parse through. Since it is only loading one state at a time, it's relatively fast enough, but still would be nice to have a progress bar anyways.
 - The features only show graphical overview of the subset of data, but doesn't offer any real statistics or solid nuggets of insight. Should do that.
+- Add dynamic color range. Current one is fixed to a range. There are functions to convert percentage to hex code, but the problem is getting the percentage. In theory, could calculate the max amount after all of the data is loaded and assign color values after that.
