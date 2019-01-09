@@ -18,6 +18,7 @@ export default class StatesMap extends Component {
       dataTip: '',
     }
   }
+
   // this function is responsible for the color displaying on each state
   statesCustomConfig = (statesData) => {
     return statesData.reduce((accumulator, state) => {
@@ -42,14 +43,14 @@ export default class StatesMap extends Component {
     }
   }
 
-  setHoveringState = (state) => {
-    // grabs name and total loan of the state being hovered over
+  setHoveringState = (usState) => {
+    // grabs name and total loan of the usState being hovered over
     // makes the text content of tooltip
-    if (state) {
+    if (usState) {
       this.setState({
-        hoveringOver: state.abbr,
-        hoverLoan: state.loanSum,
-        dataTip: this.toolTipContent(state.abbr, state.loanSum),
+        hoveringOver: usState.abbr,
+        hoverLoan: usState.loanSum,
+        dataTip: this.toolTipContent(usState.abbr, usState.loanSum),
       })
     } else {
       this.setState({
@@ -59,20 +60,15 @@ export default class StatesMap extends Component {
   }
 
   toggleHoverState = () => {
-    this.setState(prevState => {
-      return {
-        isHovering: true,
-      }
+    this.setState({
+      isHovering: true,
     })
   }
 
   toolTipContent = (stateName, stateLoan) => {
-    return `People in ${stateName} took out $${stateLoan ? this.formatDollars(stateLoan) : 0.00}`;
+    return `People in ${stateName} took out $${stateLoan ? this.props.formatDollars(stateLoan) : 0.00}`;
   }
 
-  formatDollars = (num) => {
-    return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-  }
 
   render() {
     const config = this.statesCustomConfig(this.props.calculatedData);
@@ -81,9 +77,9 @@ export default class StatesMap extends Component {
         <div className="anchor" onMouseOver={this.handleMouseOver} data-tip data-for='toolTip'>
           <USAMap customize={config} />
         </div>
-        <ReactTooltip id="toolTip" place="bottom" type="dark" effect="float">
+        {this.state.isHovering && <ReactTooltip id="toolTip" place="bottom" type="dark" effect="float">
           <span>{this.state.dataTip}</span>
-        </ReactTooltip>
+        </ReactTooltip>}
       </div>
     );
   }

@@ -12,7 +12,8 @@ class App extends Component {
       allStates: [],
       usState: '',
       allPurposes: [],
-      purposeId: '',
+      purposeId: 0,
+      currentKey: 1,
     }
   }
 
@@ -38,7 +39,6 @@ class App extends Component {
       purposeId: value,
     })
   }
-
 
   render() {
     return (

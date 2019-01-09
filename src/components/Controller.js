@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
-
 export default class Controller extends Component {
 
   handleSelect = (e) => {
