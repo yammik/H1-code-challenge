@@ -3,6 +3,7 @@ import StatesMap from './StatesMap';
 import Legend from './Legend';
 import { Button } from 'react-bootstrap';
 
+
 export default class FormatMap extends Component {
   constructor(props) {
     super(props)
@@ -11,17 +12,13 @@ export default class FormatMap extends Component {
     }
   }
 
-  handleClick = (e) => {
-    this.props.getStatesData(this.formatMapResults);
-  }
-
   formatMapResults = (resp) => {
     const loans = resp.loans;
     const loanSum = this.getLoanSum(loans);
     const result = {
       abbr: resp.state.abbr,
       loanSum: loanSum,
-      color: this.formatStateColor(loanSum),
+      color: this.loanToColor(loanSum),
     }
     return result;
   }
@@ -64,22 +61,24 @@ export default class FormatMap extends Component {
     const h = r * 0x10000 + g * 0x100 + b * 0x1;
     return '#' + ('000000' + h.toString(16)).slice(-6);
   }
+
+  // static color gradient
   colorLegend = () => {
     return [
-      {'interval': 1000, 'color': '#E8F6F3'},
-      {'interval': 5000, 'color': '#D0ECE7'},
-      {'interval': 10000, 'color': '#A2D9CE'},
-      {'interval': 50000, 'color': '#73C6B6'},
-      {'interval': 100000, 'color': '#45B39D'},
-      {'interval': 500000, 'color': '#16A085'},
-      {'interval': 1000000, 'color': '#117A65'},
-      {'interval': 5000000, 'color': '#117A65'},
-      {'interval': 10000000,'color': '#0E6655'}
+      {'interval': 1000, 'color': '#CECEDC'},
+      {'interval': 5000, 'color': '#B5B6CA'},
+      {'interval': 10000, 'color': '#9D9EB9'},
+      {'interval': 50000, 'color': '#8586A8'},
+      {'interval': 100000, 'color': '#6C6E96'},
+      {'interval': 500000, 'color': '#545685'},
+      {'interval': 1000000, 'color': '#3B3E73'},
+      {'interval': 5000000, 'color': '#232662'},
+      {'interval': 10000000,'color': '#0B0E51'}
     ];
   }
 
   // non-dynamic coloring but pretty green gradient; easy on the eyes
-  formatStateColor = (loanSum) => {
+  loanToColor = (loanSum) => {
     // ideally, the data should be normalized to the respective state's population
     const legendData = this.colorLegend();
     for (let i = 0; i < legendData.length; i++) {
@@ -87,7 +86,7 @@ export default class FormatMap extends Component {
         return legendData[i].color;
       }
     };
-    return '#0B5345';
+    return '#000233';
     // should add a legend denoting what the colors represent
   }
 
@@ -96,10 +95,10 @@ export default class FormatMap extends Component {
   }
 
   render() {
+    const calculatedData = this.props.data.map(this.formatMapResults);
     return (
-      <div className="stationary-scroll">
-        <Button onClick={this.handleClick}>take me away</Button>
-        <StatesMap formatDollars={this.formatDollars} calculatedData={this.props.data} />
+      <div className="map-container">
+        <StatesMap formatDollars={this.formatDollars} calculatedData={calculatedData} />
         <Legend formatDollars={this.formatDollars} colorLegend={this.colorLegend} />
       </div>
     )

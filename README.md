@@ -1,4 +1,6 @@
-# Lending Club Loan Stats
+# Lending Club Loan Stats (Front End)
+***ADD How To Use, config API endpoint***
+
 Readme
   Description of the problem and solution.
   Whether the solution focuses on back-end, front-end or if it's full stack.
@@ -17,7 +19,7 @@ Readme
 
 #### Word Frequency in loan descriptions
 - which word is said the most for a given loan tier?
-- currently, dictionary is too heavy
+- view one state's data on a given loan purpose category at a time
 
 ## Rationale
 #### USAMap
@@ -32,4 +34,5 @@ It is as minimal as its Readme, and very simple to use.
 
 ## Future features
 ####
-- Definitely could have used Redux for this.
+- Definitely can use Redux for this.
+- Currently, Word Cloud can be shown only for one state at a time. Because I almost died from trying to load all 51 and parsing 5000+ words for each one. So you have to use the drop menu to select other states to see them (yuck bad UX). Would be cool to have infinite scrolling and load other states' data as a response to a scroll event.

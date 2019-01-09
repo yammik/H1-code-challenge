@@ -1,23 +1,26 @@
 import React from 'react';
 import WordCloud from 'react-d3-cloud';
 
-function WordMap(props) {
-  // props data should have the following structure:
-    // const data = [
-    //   { text: 'Hey', value: 1000 },
-    //   { text: 'lol', value: 200 },
-    //   { text: 'first impression', value: 800 },
-    //   { text: 'very cool', value: 1000000 },
-    //   { text: 'duck', value: 10 },
-    // ];
-  const fontSizeMapper = word => Math.log2(word.value) * 5;
-  const data = props.calculatedData ? Object.values(props.calculatedData)[0] : []
-  return (
-    <WordCloud
-      data={data}
-      fontSizeMapper={fontSizeMapper}
-    />
-  )
-}
+export default class WordMap extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-export default WordMap;
+  // without this lifecycle method, browser will bug out
+  // this effectively gives d3 full control over DOM without React competing for it as usual
+  shouldComponentUpdate() {
+    return false;
+  }
+
+  render() {
+    const fontSizeMapper = (word) => Math.log2(word.value) * 5;
+    const data = this.props.calculatedData.length > 0 ? Object.values(this.props.calculatedData) : [];
+    return (
+      <WordCloud
+        data={data}
+        fontSizeMapper={fontSizeMapper}
+      />
+
+    )
+  }
+}

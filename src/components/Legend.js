@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 function Legend(props) {
   const legendData = props.colorLegend();
 

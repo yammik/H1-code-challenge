@@ -1,30 +1,55 @@
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import OptionsForm from './OptionsForm';
+import { Button } from 'react-bootstrap';
 
 export default class Controller extends Component {
-
-  handleSelect = (e) => {
-    this.props.setPurpose(e.target.value);
+  setPurposeId = (e) => {
+    this.props.setOption("purposeId", e.target.value);
+  }
+  setStateId = (e) => {
+    this.props.setOption("stateId", e.target.value);
   }
 
   makeCategoryOptions = (purpose) => {
-    return <option key={purpose.id} value={purpose.id}>{this.formatName(purpose.category)}</option>
+    return <option key={purpose.id} name="purposeId" value={purpose.id}>{this.formatName(purpose.category)}</option>;
+  }
+  makeStateOptions = (state) => {
+    return <option key={state.id} name="stateId" value={state.id}>{state.abbr}</option>;
   }
 
   formatName = (str) => {
     return str ? (str.charAt(0).toUpperCase() + str.slice(1)).replace(/_/, ' ') : '';
   }
 
+  handleClick = (e) => {
+    switch (this.props.appState.currentKey) {
+      case 0:
+        this.props.getStatesData();
+        break;
+      case 1:
+        this.props.getOneStateData(this.props.appState.stateId);
+        break;
+    };
+  }
+
   render() {
     return (
-      <div className="controller">
-        <FormGroup controlId="formControlsSelect" onChange={this.handleSelect}>
-          <ControlLabel>Select a loan category</ControlLabel>
-          <FormControl componentClass="select">
-            {this.props.appState.allPurposes.map(this.makeCategoryOptions)}
-          </FormControl>
-        </FormGroup>
+      <div className="menu">
+        <OptionsForm
+          label="loan category"
+          iterable={this.props.appState.allPurposes}
+          handleSelect={this.setPurposeId}
+          makeOptions={this.makeCategoryOptions} />
+
+        {this.props.appState.currentKey === 1 &&
+          <OptionsForm
+            label="state"
+            iterable={this.props.appState.allStates}
+            handleSelect={this.setStateId}
+            makeOptions={this.makeStateOptions}
+          />}
+        <Button onClick={this.handleClick}>take it away</Button>
       </div>
     )
   }
-} // end class Controller
+}

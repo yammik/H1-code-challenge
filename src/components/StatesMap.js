@@ -7,7 +7,6 @@ import ReactTooltip from 'react-tooltip'
 // seems cool and useful but would only learn it for a longer term project. It's a bit of an overkill for this since the map isn't really interactive
 
 // for the purposes of this app, USAMap gets the job done nice and easy 👍 don't even need to load in external topography data
-
 export default class StatesMap extends Component {
   constructor(props) {
     super(props);
@@ -68,7 +67,6 @@ export default class StatesMap extends Component {
   toolTipContent = (stateName, stateLoan) => {
     return `People in ${stateName} took out $${stateLoan ? this.props.formatDollars(stateLoan) : 0.00}`;
   }
-
 
   render() {
     const config = this.statesCustomConfig(this.props.calculatedData);
