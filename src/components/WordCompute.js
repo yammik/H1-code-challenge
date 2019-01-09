@@ -16,7 +16,7 @@ export default class WordCompute extends Component {
   }
 
   formatDictionary = (data) => {
-    const commonWords = 'a an the in and for or it its to too of this that my be is are were was them has will am on have'
+    const commonWords = 'a an the in and for or it its to too of this that my be is are were was them has will am on have';
     const descriptions = data.loans.map(l => l.desc);
     let result = [];
     const words = this.arrayToWords(descriptions);
@@ -24,10 +24,10 @@ export default class WordCompute extends Component {
       if (words[i]) { // only count real words
         const w = words[i].toLowerCase().replace(/\./g, '');
         if (commonWords.includes(w)) continue;
-        const oldValue = result.find(r => r.text === w)
+        const oldValue = result.find(r => r.text === w);
         // word frequency counter, but in the format required for react-d3-cloud
         if (oldValue) {
-          const newCount = { text: w, value: oldValue.value + 1 }
+          const newCount = { text: w, value: oldValue.value + 1 };
           result = [...result.filter(r => r.text !== w), newCount];
         } else {
           result.push({ text: w, value: 1 });
@@ -39,10 +39,10 @@ export default class WordCompute extends Component {
 
 
   render() {
-    // way too expensive to render all states at once; only show data for selected state
+    // way too expensive to render all states at once; only show data for one selected state
     const dictionary = this.props.data.length > 0 ? this.formatDictionary(this.props.data[0]) : null;
     return (
-      <div className="scrolling-wrapper">
+      <div className="map-container">
           { dictionary && <WordMap calculatedData={dictionary} /> }
       </div>
     )

@@ -136,6 +136,7 @@ class App extends Component {
               <WordCompute
                 data={data}
                 getOneStateData={this.getOneStateData}
+                updateMaxData={this.updateMaxData}
                 appState={this.state}
               />
             }
