@@ -1,14 +1,5 @@
 # Lending Club Loan Stats (Front End)
 
-Readme
-  Description of the problem and solution.
-  Whether the solution focuses on back-end, front-end or if it's full stack.
-  Reasoning behind your technical choices, including architectural.
-  Trade-offs you might have made, anything you left out, or what you might do differently if you were to spend additional time on the project.
-
-  Clarity: does the README clearly and concisely explains the problem and solution? Are technical tradeoffs explained?
-  Correctness: does the application do what was asked? If there is anything missing, does the README explain why it is missing?
-  Technical choices: do choices of libraries, databases, architecture etc. seem appropriate for the chosen application?
 ## Usage
 1. Clone this repo. There is a [back end](https://github.com/yammik/H1-code-challenge-api), but it's live on Heroku [here](http://hidden-shore-16694.herokuapp.com/api/v1/states/4) so you don't have to clone and run the server locally.
 2. `npm install && npm start`
