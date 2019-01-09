@@ -19,7 +19,7 @@ Generates a word cloud based on the loan applicants' description.
 - Which word is said the most in a category?
 - Unsurprisingly, loan applicants talk about paying off loans a lot
 - And a lot of gratitude words in there :)
-- **🐢‼️ For states with a lot of loan data, this feature is buggy ‼️🐢**
+- **🐢‼️🐛 For states with a lot of loan data, this feature is buggy 🐛‼️🐢**
   - It will eventually work, but you have to wait quite a bit (1-2min) and interact with the DOM for the render to happen (like clicking on the drop menu).
   - Takes a while to fetch data from server _and_ to parse the data
 
