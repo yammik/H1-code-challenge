@@ -10,6 +10,7 @@
 ## Features
 #### U.S. State loan pattern
 Provides a visual overview of the total loan sum per state.
+Hover over the state on the map to get the exact number of the sum of loans.
 - Which state is the most car-crazy?
 - Which states do not care that the wedding industry is a scam?
 
@@ -21,6 +22,7 @@ Generates a word cloud based on the loan applicants' description.
 - **!! For states with a lot of loan data, this feature is buggy**
   - It will eventually work, but you have to wait quite a bit (1-2min) and interact with the DOM for the render to happen (like clicking on the drop menu).
   - Takes a while to fetch data from server _and_ to parse the data
+
 
 ## Rationale
 #### USAMap
