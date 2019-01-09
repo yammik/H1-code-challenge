@@ -57,7 +57,7 @@ App
 - V : 
   StatesMap and WordMap components display received data.
 - C : 
-  Controller component takes inputs from user and relates those to the data in the App component.
+  Controller component takes inputs from user and relates those to the data in the App component.<br/>
   FormatMap and WordCompute components take the data and format them into the shape the view components can use.
 
 - `src/lib/Api.js` handles all of the API calls, using Axios. It's also where the base url for the endpoint can be changed.
