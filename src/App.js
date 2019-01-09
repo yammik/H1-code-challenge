@@ -54,7 +54,7 @@ class App extends Component {
     this.loadingStarted();
     this.setState({ maxData: 51 });
     this.state.allStates.forEach(state => {
-      return Api.getUSStateAndLoans(state.id, this.state.purposeId)
+      Api.getUSStateAndLoans(state.id, this.state.purposeId)
         .then(resp => {
           this.updateData(resp);
         });

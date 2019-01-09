@@ -100,7 +100,7 @@ export default class FormatMap extends Component {
     const calculatedData = this.props.data.map(this.formatMapResults);
     return (
       <div className="map-container">
-        <StatesMap formatDollars={this.formatDollars} calculatedData={calculatedData} />
+        <StatesMap appState={this.props.appState} formatDollars={this.formatDollars} calculatedData={calculatedData} />
         <Legend formatDollars={this.formatDollars} colorLegend={this.colorLegend} />
       </div>
     )

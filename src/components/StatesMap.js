@@ -51,7 +51,7 @@ export default class StatesMap extends Component {
 
   toolTipContent = (stateName, stateLoan) => {
     // makes the text content of tooltip
-    return `People in ${stateName} took out $${stateLoan ? this.props.formatDollars(stateLoan) : 0.00}`;
+    return `People in ${stateName} borrowed $${stateLoan ? this.props.formatDollars(stateLoan) : 0.00}`;
   }
 
 
