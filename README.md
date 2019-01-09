@@ -7,25 +7,61 @@
 
 #### Features
 ###### U.S. State loan pattern
+Provides a visual overview of the total loan sum per state.
 - Which state is the most car-crazy?
-- Which states take the most boujee vacations?
 - Which states do not care that the wedding industry is a scam?
 
 ###### Word Frequency in loan descriptions
-- Which word is said the most for a given loan tier?
-- View one state's data on a given loan purpose category at a time
-- For instance, loan applicants unsurprisingly talk about paying off their loans a lot
+Generates a word cloud based on the loan applicants' description.
+- Which word is said the most in a category?
+- Unsurprisingly, loan applicants talk about paying off loans a lot
+- And a lot of gratitude words in there :)
 
 ## Rationale
 #### USAMap
-I looked into d3 first because of its popularity, but ultimately decided d3 would be an overkill for what I wanted to do in this challenge. But it would be really good to learn for a more long-term project.<br />
+I looked into d3 first because of its popularity, but ultimately decided d3 would be an overkill for what I wanted to do in this challenge. But it would be really good to learn for a more long-term project.
 It takes care of a lot of rendering on its own--no need to map a path to the state's ID or name. Color can be optionally passed in for a specific state, so I assigned a color value based on the total loan amount of applications listed in the respective state.
-<br />
 
 #### react-d3-cloud
-[d3-cloud](https://github.com/Yoctol/react-d3-cloud) word cloud component. This is a part of the d3 library to visualize word frequency in the descriptions of the loan applications.<br />
+[d3-cloud](https://github.com/Yoctol/react-d3-cloud) is a word cloud component. This is a part of the d3 library to visualize word frequency in the descriptions of the loan applications.
 It is as minimal as its Readme, and very simple to use.
-<br />
+
+#### react-bootstrap
+[react-bootstrap](https://react-bootstrap.github.io) just makes life easy. I prefer custom CSS when I have the leisure, but bootstrap just makes the layout so much easier.
+
+#### react-tooltip
+When I realized that d3 would have made it easier to implement Tooltip on hovering over paths, I almost decided to go back to the d3 route, but after 2 seconds of Googling, I found that there was a package for it already: [react-tooltip](https://github.com/wwayne/react-tooltip).
+Changing display via mouseover/mouseleave events can be annoying, but this tool simplified a lot of that. 
+
+## Structure
+```
+App 
+ |
+ |___ Controller
+ |___ Tabs
+        |
+        |___ FormatMap
+        |         |___ StatesMap
+        |         |       |___ USAMap
+        |         |       |___ ReactToolTip
+        |         |___ Legend
+        |                 |___ LegendElement(s)
+        |___ WordCompute
+                  |___ WordMap
+                          |___ WordCloud
+                  
+```
+
+- M : 
+  App component stores the bulk of the data, and talks to Controller component
+- V : 
+  StatesMap and WordMap components display received data.
+- C : 
+  Controller component takes inputs from user and relates those to the data in the App component.
+  FormatMap and WordCompute components take the data and format them into the shape the view components can use.
+
+`src/lib/Api.js` handles all of the API calls, using Axios.
+
 
 ## Future features
 - Definitely can use Redux for this.
