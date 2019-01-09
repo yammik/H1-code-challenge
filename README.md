@@ -1,7 +1,9 @@
 # Lending Club Loan Stats (Front End)
 
 ## Usage
-1. Clone this repo. There is a [back end](https://github.com/yammik/H1-code-challenge-api), but it's live on Heroku [here](http://hidden-shore-16694.herokuapp.com/api/v1/states/4) so you don't have to clone and run the server locally.
+1. Clone this repo. There is a [back end](https://github.com/yammik/H1-code-challenge-api), but it's live on Heroku so you don't have to clone and run the server locally.
+  - Live at http://hidden-shore-16694.herokuapp.com/api/v1/
+    - You can hit `/states`, `/purposes`, `/states/:id`, etc
 2. Run `npm install && npm start`
 3. Go to [http://localhost:3001/](http://localhost:3001/)
 
