@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import OptionsForm from './OptionsForm';
 import { Button } from 'react-bootstrap';
 
-export default class Controller extends Component {
+
+export default class Controller extends Component { // could be functional
   setPurposeId = (e) => {
     this.props.setOption("purposeId", e.target.value);
   }
@@ -21,7 +22,10 @@ export default class Controller extends Component {
     return str ? (str.charAt(0).toUpperCase() + str.slice(1)).replace(/_/, ' ') : '';
   }
 
+
   handleClick = (e) => {
+    // this populates the data in App Component
+    // the updated data is passed to the formatting/computing components
     switch (this.props.appState.currentKey) {
       case 0:
         this.props.getStatesData();

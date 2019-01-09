@@ -4,6 +4,7 @@ import Controller from './components/Controller';
 import FormatMap from './components/FormatMap';
 import WordCompute from './components/WordCompute';
 import { ProgressBar, Tabs, Tab } from 'react-bootstrap';
+
 const Api = require('./lib/Api.js')
 
 
@@ -38,19 +39,6 @@ class App extends Component {
       })
   }
 
-  setOption = (key, value) => {
-    this.setState({
-      [key]: value,
-    })
-  }
-
-  loadingStarted = () => {
-    this.setState({
-      fullyLoaded: false,
-      progress: 0,
-      data: [],
-    });
-  }
 
   updateData = (result) => {
     this.setState(prevState => {
@@ -74,13 +62,22 @@ class App extends Component {
   }
 
   getOneStateData = (stateId) => {
-    // not useful for displaying map, but faster for word cloud
+    // not useful for displaying map, but faster for word cloud to grab one set at a time
     this.loadingStarted();
     this.setState({ maxData: 1 });
-    Api.getUSState(stateId)
+    Api.getUSStateAndLoans(stateId, this.state.purposeId)
       .then(resp => {
         this.updateData(resp);
       })
+  }
+
+
+  loadingStarted = () => {
+    this.setState({
+      fullyLoaded: false,
+      progress: 0,
+      data: [],
+    });
   }
 
   updateProgress = (prog) => {
@@ -103,14 +100,22 @@ class App extends Component {
     })
   }
 
+
   handleTabSelect = (currentKey) => {
     this.setState({ currentKey })
   }
 
+  setOption = (key, value) => {
+    this.setState({
+      [key]: value,
+    })
+  }
+
+
   render() {
     const { currentKey, fullyLoaded, data, progress } = this.state;
     return (
-      <div className="viz">
+      <div>
         <Controller
           appState={this.state}
           getStatesData={this.getStatesData}

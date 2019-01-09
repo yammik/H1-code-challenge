@@ -3,10 +3,6 @@ import USAMap from "react-usa-map";
 import ReactTooltip from 'react-tooltip'
 
 
-// tried using d3, but wasn't comfortable with its clash with React over DOM control
-// seems cool and useful but would only learn it for a longer term project. It's a bit of an overkill for this since the map isn't really interactive
-
-// for the purposes of this app, USAMap gets the job done nice and easy 👍 don't even need to load in external topography data
 export default class StatesMap extends Component {
   constructor(props) {
     super(props);
@@ -18,20 +14,16 @@ export default class StatesMap extends Component {
     }
   }
 
-  // this function is responsible for the color displaying on each state
-  statesCustomConfig = (statesData) => {
-    return statesData.reduce((accumulator, state) => {
-      return {...accumulator,
-        [state.abbr]: {
-          fill: state.color,
-        }
-      }
-    }, {})
+
+  toggleHoverState = () => {
+    this.setState({
+      isHovering: true,
+    })
   }
 
   handleMouseOver = (e) => {
-    // only fire when hovering over a state path
     if (e.target.tagName === 'path' && e.target.classList.value.includes("state")) {
+      // only fire when hovering over a state path
       const state = this.props.calculatedData.find(st => st.abbr === e.target.classList[0]);
       this.toggleHoverState();
       this.setHoveringState(state);
@@ -44,7 +36,6 @@ export default class StatesMap extends Component {
 
   setHoveringState = (usState) => {
     // grabs name and total loan of the usState being hovered over
-    // makes the text content of tooltip
     if (usState) {
       this.setState({
         hoveringOver: usState.abbr,
@@ -53,23 +44,31 @@ export default class StatesMap extends Component {
       })
     } else {
       this.setState({
-        dataTip: "no data here (yet)",
+        dataTip: "no data here (yet) 👀",
       })
     }
   }
 
-  toggleHoverState = () => {
-    this.setState({
-      isHovering: true,
-    })
-  }
-
   toolTipContent = (stateName, stateLoan) => {
+    // makes the text content of tooltip
     return `People in ${stateName} took out $${stateLoan ? this.props.formatDollars(stateLoan) : 0.00}`;
   }
 
+
+  formatStatesConfig = (statesData) => {
+    // this function is responsible for the color displaying on each state
+    return statesData.reduce((accumulator, state) => {
+      return {...accumulator,
+        [state.abbr]: {
+          fill: state.color,
+        }
+      }
+    }, {})
+  }
+
+
   render() {
-    const config = this.statesCustomConfig(this.props.calculatedData);
+    const config = this.formatStatesConfig(this.props.calculatedData);
     return (
       <div className="container">
         <div className="anchor" onMouseOver={this.handleMouseOver} data-tip data-for='toolTip'>

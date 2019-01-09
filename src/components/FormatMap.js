@@ -11,34 +11,7 @@ export default class FormatMap extends Component {
     }
   }
 
-  formatMapResults = (resp) => {
-    const loans = resp.loans;
-    const loanSum = this.getLoanSum(loans);
-    const result = {
-      abbr: resp.state.abbr,
-      loanSum: loanSum,
-      color: this.loanToColor(loanSum),
-    }
-    return result;
-  }
 
-  getLoanSum = (loans) => {
-    return loans.reduce((accumulator, loan) => accumulator + loan.loan_amnt, 0);
-  }
-
-  percentageBasedColor = () => {
-    // percentage-based coloring; can be dynamic
-    // Limitations: don't quite know the min-max range until information about all 51 states is obtained
-    // would be bad UX to make user wait 15s until they see colors appear on the screen
-    // maybe use when loading takes less than 3s
-    // also probably not good for exponential scales
-    const stateDataWithColor = this.state.data.map(state => {
-      return {...state, color: this.percentToColor(state.loanSum / this.state.maxLoan * 100)}
-    })
-    this.setState({
-      data: stateDataWithColor,
-    });
-  }
   setMaxSum = (sum) => {
     // goes with percentageBasedColor
     if (this.state.maxLoan < sum) {
@@ -47,6 +20,20 @@ export default class FormatMap extends Component {
       })
     }
   }
+
+  percentageBasedColor = () => {
+    // percentage-based coloring; can be dynamic
+    // Limitations: don't quite know the min-max range until information about all 51 states is obtained
+    // would be bad UX to make user wait 15s until they see colors appear on the screen
+    // not good for logs
+    const stateDataWithColor = this.state.data.map(state => {
+      return {...state, color: this.percentToColor(state.loanSum / this.state.maxLoan * 100)}
+    })
+    this.setState({
+      data: stateDataWithColor,
+    });
+  }
+
   percentToColor = (percent) => {
     // red-yellow-green gradient; give it a percentage, you get the corresponding color back
     let r, g, b = 0;
@@ -76,8 +63,8 @@ export default class FormatMap extends Component {
     ];
   }
 
-  // non-dynamic coloring but pretty green gradient; easy on the eyes
-  loanToColor = (loanSum) => {
+  // non-dynamic coloring but pretty blue gradient; easy on the eyes
+  sumToColor = (loanSum) => {
     // ideally, the data should be normalized to the respective state's population
     const legendData = this.colorLegend();
     for (let i = 0; i < legendData.length; i++) {
@@ -92,6 +79,22 @@ export default class FormatMap extends Component {
   formatDollars = (num) => {
     return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   }
+
+  formatMapResults = (resp) => {
+    const loans = resp.loans;
+    const loanSum = this.getLoanSum(loans);
+    const result = {
+      abbr: resp.state.abbr,
+      loanSum: loanSum,
+      color: this.sumToColor(loanSum),
+    }
+    return result;
+  }
+
+  getLoanSum = (loans) => {
+    return loans.reduce((accumulator, loan) => accumulator + loan.loan_amnt, 0);
+  }
+
 
   render() {
     const calculatedData = this.props.data.map(this.formatMapResults);

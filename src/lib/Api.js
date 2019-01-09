@@ -2,6 +2,7 @@ var axios = require('axios');
 
 const apiHost = 'http://hidden-shore-16694.herokuapp.com';
 // const apiHost = 'http://localhost:3000';
+// uncomment line 4 and comment out line 3 if using local server with Rails
 const version = 'v1';
 
 module.exports = {
