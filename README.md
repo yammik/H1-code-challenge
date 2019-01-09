@@ -14,14 +14,13 @@ Readme
 2. `npm install && npm start`
 3. Go to [http://localhost:3001/](http://localhost:3001/)
 
-
-## Aim of this app
-#### U.S. State loan pattern
+#### Features
+###### U.S. State loan pattern
 - Which state is the most car-crazy?
 - Which state takes the most boujee vacations?
 - Debt-heaviest state?
 
-#### Word Frequency in loan descriptions
+###### Word Frequency in loan descriptions
 - which word is said the most for a given loan tier?
 - view one state's data on a given loan purpose category at a time
 
