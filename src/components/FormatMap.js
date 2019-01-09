@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import StatesMap from './StatesMap';
 import Legend from './Legend';
-import { Button } from 'react-bootstrap';
 
 
 export default class FormatMap extends Component {

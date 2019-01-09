@@ -1,6 +1,6 @@
 var axios = require('axios');
 
-const apiHost = 'http://' + (process.env.API_HOST || 'localhost') + ':3000';
+const apiHost = 'http://hidden-shore-16694.herokuapp.com/';
 const version = 'v1';
 
 module.exports = {

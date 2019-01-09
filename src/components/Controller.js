@@ -29,6 +29,8 @@ export default class Controller extends Component {
       case 1:
         this.props.getOneStateData(this.props.appState.stateId);
         break;
+      default:
+        break;
     };
   }
 

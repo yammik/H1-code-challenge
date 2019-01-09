@@ -1,5 +1,4 @@
 # Lending Club Loan Stats (Front End)
-***ADD How To Use, config API endpoint***
 
 Readme
   Description of the problem and solution.
@@ -10,6 +9,11 @@ Readme
   Clarity: does the README clearly and concisely explains the problem and solution? Are technical tradeoffs explained?
   Correctness: does the application do what was asked? If there is anything missing, does the README explain why it is missing?
   Technical choices: do choices of libraries, databases, architecture etc. seem appropriate for the chosen application?
+## Usage
+1. Clone this repo. There is a [back end](https://github.com/yammik/H1-code-challenge-api), but it's live on Heroku [here](http://hidden-shore-16694.herokuapp.com/api/v1/states/4) so you don't have to clone and run the server locally.
+2. `npm install && npm start`
+3. Go to [http://localhost:3001/](http://localhost:3001/)
+
 
 ## Aim of this app
 #### U.S. State loan pattern
@@ -36,3 +40,4 @@ It is as minimal as its Readme, and very simple to use.
 ####
 - Definitely can use Redux for this.
 - Currently, Word Cloud can be shown only for one state at a time. Because I almost died from trying to load all 51 and parsing 5000+ words for each one. So you have to use the drop menu to select other states to see them (yuck bad UX). Would be cool to have infinite scrolling and load other states' data as a response to a scroll event.
+- The total loan sum per state is currently not normalized. Should use each state's population to do that in the future.

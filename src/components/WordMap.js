@@ -2,9 +2,6 @@ import React from 'react';
 import WordCloud from 'react-d3-cloud';
 
 export default class WordMap extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   // without this lifecycle method, browser will bug out
   // this effectively gives d3 full control over DOM without React competing for it as usual

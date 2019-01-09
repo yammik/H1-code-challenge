@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import WordMap from './WordMap';
-import OptionsForm from './OptionsForm';
-import { Button } from 'react-bootstrap';
 
 
 export default class WordCompute extends Component {
@@ -12,7 +10,7 @@ export default class WordCompute extends Component {
     };
   }
 
-
+  // there was probably some word-parsing library I could have used...
   arrayToWords = (array) => {
     return array.join(' ').replace('.','').split(' ');
   }
