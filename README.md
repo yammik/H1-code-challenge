@@ -60,7 +60,7 @@ App
   Controller component takes inputs from user and relates those to the data in the App component.
   FormatMap and WordCompute components take the data and format them into the shape the view components can use.
 
-`src/lib/Api.js` handles all of the API calls, using Axios.
+- `src/lib/Api.js` handles all of the API calls, using Axios. It's also where the base url for the endpoint can be changed.
 
 
 ## Future features
