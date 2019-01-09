@@ -12,17 +12,17 @@ export default class WordCompute extends Component {
 
   // there was probably some word-parsing library I could have used...
   arrayToWords = (array) => {
-    return array.join(' ').replace('.','').split(' ');
+    return array.join(' ').split(' ');
   }
 
   formatDictionary = (data) => {
-    const commonWords = 'a an the in and for or it its to too of this that my be is are were was them'
+    const commonWords = 'a an the in and for or it its to too of this that my be is are were was them has will am on have'
     const descriptions = data.loans.map(l => l.desc);
     let result = [];
     const words = this.arrayToWords(descriptions);
     for (let i = 0; i < words.length; i++) {
       if (words[i]) { // only count real words
-        const w = words[i].toLowerCase();
+        const w = words[i].toLowerCase().replace(/\./g, '');
         if (commonWords.includes(w)) continue;
         const oldValue = result.find(r => r.text === w)
         // word frequency counter, but in the format required for react-d3-cloud
