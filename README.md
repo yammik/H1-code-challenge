@@ -54,11 +54,11 @@ App
                   
 ```
 
-- M : 
+- **M** : 
   App component stores the bulk of the data, and talks to Controller component
-- V : 
+- **V** : 
   StatesMap and WordMap components display received data.
-- C : 
+- **C** : 
   Controller component takes inputs from user and relates those to the data in the App component.<br/>
   FormatMap and WordCompute components take the data and format them into the shape the view components can use.
 
