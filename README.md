@@ -5,13 +5,13 @@
 2. Run `npm install && npm start`
 3. Go to [http://localhost:3001/](http://localhost:3001/)
 
-#### Features
-###### U.S. State loan pattern
+## Features
+#### U.S. State loan pattern
 Provides a visual overview of the total loan sum per state.
 - Which state is the most car-crazy?
 - Which states do not care that the wedding industry is a scam?
 
-###### Word Frequency in loan descriptions
+#### Word Frequency in loan descriptions
 Generates a word cloud based on the loan applicants' description.
 - Which word is said the most in a category?
 - Unsurprisingly, loan applicants talk about paying off loans a lot
